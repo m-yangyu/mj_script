@@ -1,0 +1,9 @@
+.history/
+.DS_Store
+
+# 开发中用到的文件夹，不上传npm
+react/
+
+# npm构建
+node_modules/
+package-lock.json

@@ -25,7 +25,8 @@ const getDir = async function print(viewPath) {
         template: `${DIR}/template/index.tpl.ejs`,
         filename: `${key}.html`,
         minify: true,
-        inject: true
+        inject: true,
+        collapseWhitespace: true
     })));
 };
 

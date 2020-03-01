@@ -7,8 +7,6 @@ const { DIR, sourceDIR } = require('../static')
 const merge = require('webpack-merge');
 const chalk = require('chalk');
 
-process.env.ENV_GZIP = true;
-
 module.exports = function(options) {
     const {isAnalyz = false, isPre = false} = options || {};
 

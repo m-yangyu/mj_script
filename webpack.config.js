@@ -22,7 +22,6 @@ const sassReg = /\.scss|.sass$/;
 const lessModuleReg = /\.module\.less/;
 const lessReg = /\.less$/;
 
-const ENV_GZIP = process.env.ENV_GZIP;
 const hasHappyPack = os.cpus().length > 1;
 const hasAntdTheme = fs.existsSync(`${DIR}/antd.theme.js`);
 
@@ -30,6 +29,9 @@ module.exports = function(env) {
 
     const isDev = env === 'development';
     const isPro = env !== 'development';
+    const isLess = fs.existsSync(`${DIR}/src/style/common.less`);
+    const isSass = fs.existsSync(`${DIR}/src/style/common.scss`);
+    const ENV_GZIP = process.env.ENV_GZIP;
 
     const styleLoader = (cssOptions = {}) => {
         return [
@@ -52,6 +54,30 @@ module.exports = function(env) {
                 }
             }
         ].filter(Boolean)
+    }
+
+    const getLessLoader = () => {
+        return [
+            'less-loader',
+            isLess && {
+                loader: 'sass-resources-loader',
+                options: {
+                    resources: [`${sourceDIR}/style/common.less`]
+                }
+            }
+        ].filter(Boolean);
+    }
+
+    const getSassLoader = () => {
+        return [
+            'sass-loader',
+            isSass && {
+                loader: 'sass-resources-loader',
+                options: {
+                    resources: [`${sourceDIR}/style/common.scss`]
+                }
+            }
+        ].filter(Boolean);
     }
 
     return {
@@ -77,7 +103,7 @@ module.exports = function(env) {
             }),
             new CleanWebpackPlugin(),
             new CopyWebpackPlugin([{
-                from: `${DIR}/assets`,
+                from: `${DIR}/src/assets`,
                 to: './assets'
             }]),
             new webpack.DefinePlugin({
@@ -214,13 +240,7 @@ module.exports = function(env) {
                                 ...styleLoader({
                                     modules: true
                                 }),
-                                'sass-loader',
-                                {
-                                    loader: 'sass-resources-loader',
-                                    options: {
-                                        resources: [`${sourceDIR}/style/common.scss`]
-                                    }
-                                }
+                                ...getSassLoader()
                             ],
                             include: sourceDIR
                         },
@@ -230,13 +250,7 @@ module.exports = function(env) {
                                 ...styleLoader({
                                     modules: true
                                 }),
-                                'less-loader',
-                                {
-                                    loader: 'sass-resources-loader',
-                                    options: {
-                                        resources: [`${sourceDIR}/style/common.less`]
-                                    }
-                                }
+                                ...getLessLoader()
                             ],
                             include: sourceDIR
                         },
@@ -244,13 +258,7 @@ module.exports = function(env) {
                             test: sassReg,
                             use: [
                                 ...styleLoader(),
-                                'sass-loader',
-                                {
-                                    loader: 'sass-resources-loader',
-                                    options: {
-                                        resources: [`${sourceDIR}/style/common.scss`]
-                                    }
-                                }
+                                ...getSassLoader()
                             ],
                             include: sourceDIR
                         },
@@ -258,13 +266,7 @@ module.exports = function(env) {
                             test: lessReg,
                             use: [
                                 ...styleLoader(),
-                                'less-loader',
-                                {
-                                    loader: 'sass-resources-loader',
-                                    options: {
-                                        resources: [`${sourceDIR}/style/common.less`]
-                                    }
-                                }
+                                ...getLessLoader()
                             ],
                             include: sourceDIR
                         },

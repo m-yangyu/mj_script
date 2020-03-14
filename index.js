@@ -4,6 +4,7 @@ const path = require('path');
 const argvStore = require('argv_store');
 const devServer = require(path.resolve(__dirname, './script/devServer'));
 const build = require(path.resolve(__dirname, './script/build'));
+const addView = require('./script/addView');
 
 const program = new argvStore();
 
@@ -19,4 +20,5 @@ program
     .command('build:pre', '预生产', () => build({isPre: true}))
     .command('dev', '开发', devServer)
     .command('analyz', '分析', () => build({isAnalyz: true}))
+    .command('add', '添加新页面', addView)
     .parse();

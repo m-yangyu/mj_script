@@ -5,8 +5,8 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 
 const entryObj = {};
 const htmlPlugin = [];
-const getDir = async function print(viewPath) {
-
+const getDir = async function(viewPath) {
+    console.log(path.resolve(viewPath, '../index.js'));
     const signalPath = path.resolve(viewPath, '../index.js');
     // 在src的目录下存在index.js则用单页，不存在则是多页的形式
     if (fs.existsSync(signalPath)) {

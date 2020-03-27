@@ -32,6 +32,7 @@ module.exports = function(env) {
     const isSass = fs.existsSync(`${DIR}/src/style/common.scss`);
     const ENV_GZIP = process.env.ENV_GZIP;
     const isDll = fs.existsSync(`${DIR}/lib/lib.js`);
+    const isEslint = fs.existsSync(`${DIR}/.eslintrc.js`);
 
     const styleLoader = (cssOptions = {}) => {
         return [
@@ -183,7 +184,7 @@ module.exports = function(env) {
         module: {
             rules: [
                 // 文件的提前eslint检测
-                {
+                isEslint && {
                     test: /\.js|jsx/,
                     enforce: 'pre',
                     loader: 'eslint-loader',
@@ -291,7 +292,7 @@ module.exports = function(env) {
                         }
                     ]
                 }
-            ]
+            ].filter(Boolean)
         }
     }
 }

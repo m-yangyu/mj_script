@@ -1,11 +1,9 @@
 {
   "name": "mj-script",
-  "version": "1.2.0",
-  "description": "",
+  "version": "1.2.3",
+  "description": "企业级脚手架",
   "main": "index.js",
-  "scripts": {
-    "lib-build": "webpack ./webpack.dll.config.js"
-  },
+  "scripts": {},
   "bin": {
     "mj-script": "./index.js"
   },

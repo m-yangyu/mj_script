@@ -8,14 +8,9 @@ const addView = require('./add');
 const deploy = require('./deploy');
 const dll = require('./dll');
 const reactInit = require('./cli');
+const packageJson = require('./package.json');
 
 const program = new argvStore();
-
-const readFileSync = (url) => {
-    return JSON.parse(fs.readFileSync(path.resolve(__dirname, url)).toString());
-}
-
-const packageJson = readFileSync('./package.json');
 
 program
     .version(packageJson.version)

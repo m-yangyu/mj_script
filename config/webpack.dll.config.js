@@ -3,7 +3,6 @@ const fs = require('fs');
 const webpack = require('webpack')
 const DllPlugin = webpack.DllPlugin;
 const { DIR, outputDIR } = require('./static');
-const packageJson = require(`${DIR}/package.json`);
 
 
 const filterEnter = (entry) => {
@@ -21,10 +20,15 @@ const filterEnter = (entry) => {
 }
 
 const getEntry = () => {
-    const entryObj = {
-        ...packageJson.dependencies
+    const packagePath = `${DIR}/package.json`;
+    if (fs.existsSync(packagePath)) {
+        const packageJson = require(packagePath);
+        const entryObj = {
+            ...packageJson.dependencies
+        }
+        return filterEnter(Object.keys(entryObj))
     }
-    return filterEnter(Object.keys(entryObj))
+    return []
 }
 
 module.exports = {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node ../index build",
+    "build": "node ../index.js build",
     "dev": "mj-script dev",
     "build:pre": "mj-script build:pre",
     "analyz": "mj-script analyz",
@@ -12,7 +12,7 @@
     "test": "jest --passWithNoTests",
     "add": "mj-script add",
     "deploy": "mj-script deploy",
-    "lib-build": "node ../script/dll.js"
+    "build:lib": "node ../index.js build:lib"
   },
   "pre-commit": [
     "lint",

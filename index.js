@@ -6,6 +6,7 @@ const devServer = require(path.resolve(__dirname, './script/devServer'));
 const build = require(path.resolve(__dirname, './script/build'));
 const addView = require('./script/addView');
 const deploy = require('./script/deploy');
+const dll = require('./script/dll');
 
 const program = new argvStore();
 
@@ -23,4 +24,5 @@ program
     .command('analyz', '分析', () => build({isAnalyz: true}))
     .command('add', '添加新页面', addView)
     .command('deploy', '部署', deploy)
+    .command('build:lib', 'dll文件构建', dll)
     .parse();

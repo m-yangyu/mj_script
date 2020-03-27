@@ -3,4 +3,6 @@ node_modules/
 dist/
 .DS_Store
 package-lock.json
-mj_react
+react/dist
+react/lib
+react/node_modules

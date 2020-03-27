@@ -1,5 +1,7 @@
 const {spawn} = require('child_process');
 const fs = require('fs');
+const path = require('path');
+const fsE = require('fs-extra');
 const ora = require('ora');
 const rimraf = require('rimraf');
 const chalk = require('chalk');
@@ -7,6 +9,7 @@ const {
     changeByOptions
 } = require('./packageChange')
 const configureFiles = require('./configureFiles');
+const { DIR } = require('../../config/static');
 
 const { getDelConfig } = configureFiles;
 const getProgramName = (url) => {
@@ -43,10 +46,26 @@ const downLoadGit = (url, renameParam) => {
     })
 }
 
+const copyLoad = (renameParam) => {
+    return new Promise(resolve => {
+        const spinner = ora({
+            text: '正在下载',
+            discardStdin: false
+        }).start();
+        const name = renameParam || 'react_template';
+        fsE.copy(path.resolve(__dirname, '../../react'), `${DIR}/${name}`).then(res => {
+            spinner.succeed('下载完成');
+            resolve(name);
+        }).catch(e => {
+            reject(e);
+        })
+    })
+}
+
 const downLoad = async (options, url, renameParam) => {
     const { css, module, react } = options;
     
-    const dirName = await downLoadGit(url, renameParam);
+    const dirName = await copyLoad(renameParam);
     if (dirName) {
         const spinner = ora({
             text: '正在安装配置',

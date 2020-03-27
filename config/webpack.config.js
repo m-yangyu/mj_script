@@ -5,7 +5,6 @@ const { outputDIR, sourceDIR, DIR } = require('./static');
 const { htmlPlugin, entryObj } = require('./public/entry');
 const Ext = require('./alisa/ext');
 const aliasConfig = require('./alisa');
-// const themConfig = require('./webpack/webpack.them.conf');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -32,6 +31,7 @@ module.exports = function(env) {
     const isLess = fs.existsSync(`${DIR}/src/style/common.less`);
     const isSass = fs.existsSync(`${DIR}/src/style/common.scss`);
     const ENV_GZIP = process.env.ENV_GZIP;
+    const isDll = fs.existsSync(`${DIR}/lib/lib.js`);
 
     const styleLoader = (cssOptions = {}) => {
         return [
@@ -137,6 +137,11 @@ module.exports = function(env) {
                 algorithm: 'gzip',
                 threshold: 10240,
                 minRatio: 0.8
+            }),
+            isDll && 
+            new webpack.DllReferencePlugin({
+                context: DIR,
+                manifest: require(`${DIR}/lib/manifest.json`)
             })
         ].filter(Boolean),
         optimization: {

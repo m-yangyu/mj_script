@@ -11,14 +11,16 @@ const getDir = async function(viewPath) {
     if (fs.existsSync(signalPath)) {
         entryObj.index = signalPath;
     } else {
-        const data = fs.readdirSync(viewPath);
-        data.map(name => {
-            const dirPath = `${viewPath}/${name}`;
-            const stats = fs.statSync(dirPath);
-            if (stats.isDirectory() && fs.existsSync(`${dirPath}/index.jsx`)) {
-                entryObj[name] = `${dirPath}/index.jsx`;
-            }
-        })
+        if (fs.existsSync(viewPath)) {
+            const data = fs.readdirSync(viewPath);
+            data.map(name => {
+                const dirPath = `${viewPath}/${name}`;
+                const stats = fs.statSync(dirPath);
+                if (stats.isDirectory() && fs.existsSync(`${dirPath}/index.jsx`)) {
+                    entryObj[name] = `${dirPath}/index.jsx`;
+                }
+            })
+        }
     }
     Object.keys(entryObj).map(key => htmlPlugin.push(new htmlWebpackPlugin({
         template: `${DIR}/template/index.tpl.ejs`,

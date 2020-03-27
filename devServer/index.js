@@ -1,10 +1,10 @@
 const fs = require('fs');
 const execSync = require('child_process').execSync;
-const { DIR } = require('../static')
+const { DIR } = require('../config/static')
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
-const configFactory = require('../webpack.config');
-const devConfig = require('../webpack.dev.conf');
+const configFactory = require('../config/webpack.config');
+const devConfig = require('../config/webpack.dev.conf');
 const merge = require('webpack-merge');
 
 // 获取当前使用的端口是否被占用

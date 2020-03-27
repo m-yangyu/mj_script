@@ -3,7 +3,9 @@
   "version": "1.1.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "lib-build": "webpack ./webpack.dll.config.js"
+  },
   "bin": {
     "mj-script": "./index.js"
   },
@@ -61,9 +63,7 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-manifest-plugin": "^2.2.0",
     "webpack-merge": "^4.2.2",
-    "workbox-webpack-plugin": "^5.0.0"
-  },
-  "devDependencies": {
+    "workbox-webpack-plugin": "^5.0.0",
     "file-loader": "^5.1.0"
   }
 }

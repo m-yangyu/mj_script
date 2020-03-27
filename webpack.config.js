@@ -32,6 +32,7 @@ module.exports = function(env) {
     const isLess = fs.existsSync(`${DIR}/src/style/common.less`);
     const isSass = fs.existsSync(`${DIR}/src/style/common.scss`);
     const ENV_GZIP = process.env.ENV_GZIP;
+    const isDll = fs.existsSync(`${DIR}/lib/lib.js`);
 
     const styleLoader = (cssOptions = {}) => {
         return [
@@ -137,6 +138,11 @@ module.exports = function(env) {
                 algorithm: 'gzip',
                 threshold: 10240,
                 minRatio: 0.8
+            }),
+            isDll && 
+            new webpack.DllReferencePlugin({
+                context: DIR,
+                manifest: require(`${DIR}/lib/manifest.json`)
             })
         ].filter(Boolean),
         optimization: {

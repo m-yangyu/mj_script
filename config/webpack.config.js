@@ -5,7 +5,6 @@ const { outputDIR, sourceDIR, DIR } = require('./static');
 const { htmlPlugin, entryObj } = require('./public/entry');
 const Ext = require('./alisa/ext');
 const aliasConfig = require('./alisa');
-// const themConfig = require('./webpack/webpack.them.conf');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');

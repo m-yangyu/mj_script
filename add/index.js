@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { viewDIR } = require('../static/index');
-const getTemplate = require('../template/reactTpl');
+const { viewDIR } = require('../config/static/index');
+const getTemplate = require('./template/reactTpl');
 const inquirer = require('inquirer');
 
 const getAnswer = async (options) => {

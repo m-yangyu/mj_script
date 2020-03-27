@@ -24,6 +24,18 @@ webpack的配置，支持基本的方法
 
 预生产环境，除了对应的环境变量有不同以外，跟生产环境不会有什么区分，同样的可以通过`${DIR}/config/preConfig.js`文件来修改对应的`webpack`参数
 
+### mj-script depoly
+
+一键部署，直接部署至对应的服务器
+
+### mj-script build:lib
+
+打包dll依赖
+
+### mj-script create
+
+创建新项目，可添加参数`-r --rename` 用来重写文件夹名称
+
 ## 模块内容
 
 ### 持久化缓存
@@ -89,6 +101,12 @@ assets文件夹会被打包到`./assets`文件夹中，所以如果使用图片�
 
 如果存在`eslint`以及`jest`，那么在commit的时候会默认调用`lint`以及`test`命令，执行通过在上传代码
 
+### 
+
+### dllPlugin
+
+dllPlugin 默认会将`packageJson`下的`dependencies`全部进行打包进去，可以通过项目下`config/dllConfig.js`进行文件配置，里面配置的文件是不需要进入dll打包的文件
+
 ## 注意事项
 
 1. 代码下载下来之后会在`src/style`目录下存在`less`跟`scss`文件，可以选择其一进行使用
@@ -99,5 +117,6 @@ assets文件夹会被打包到`./assets`文件夹中，所以如果使用图片�
 1. 添加vue的项目
 2. ts创建支持
 3. 可视化项目搭建
-4. 构建的depolyer的支持（多项目配置，项目开发，测试，预生产，生产流程规划）
-5. depolyer支持登陆，企业级部署（企业内部部署，用户权限控制）
+4. ssr搭建
+5. 构建的depolyer的支持（多项目配置，项目开发，测试，预生产，生产流程规划）
+6. depolyer支持登陆，企业级部署（企业内部部署，用户权限控制）

@@ -1,8 +1,10 @@
 .history/
 .DS_Store
 
-# 开发中用到的文件夹，不上传npm
-react/
+# react 中的构建文件不上传
+react/dist
+react/lib
+react/node_modules
 
 # npm构建
 node_modules/

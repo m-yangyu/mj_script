@@ -2,19 +2,30 @@ const path = require('path');
 const fs = require('fs');
 const fsE = require('fs-extra');
 const { copyFile, writeFile, mkdir } = require('../tools/files');
-const {
-    SyncHook,
-    SyncBailHook,
-    SyncWaterfallHook,
-    SyncLoopHook,
-    AsyncParallelHook,
-    AsyncParallelBailHook,
-    AsyncSeriesHook,
-    AsyncSeriesBailHook,
-    AsyncSeriesWaterfallHook
-} = require('tapable')
+const Generator = require('./Generator');
 
-const modulesLoad = () => {
+const createGenerator = () => {
+    return new Generator()
+}
+
+const createPlugins = (gen, options) => {
+    options.map(name => {
+        try {
+            require(`./${name}`).apply(gen);
+        } catch (e){
+            const plugin = new (require(`./${name}`));
+            plugin.apply(gen);
+        }
+    })
+    gen.hooks.afterCreatePlugin.call();
+}
+
+const modulesLoad = async (options) => {
+
+    const gen = createGenerator();
+    createPlugins(gen, ['less']);
+
+    gen.hooks.startGenerator.call();
     // 生成packageJSON
     // 生成根目录配置文件
     // 生成babel
@@ -28,6 +39,6 @@ const modulesLoad = () => {
     //      - 生成style文件夹
 
 }
-
+modulesLoad();
 
 module.exports = modulesLoad;

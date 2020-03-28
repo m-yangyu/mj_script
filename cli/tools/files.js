@@ -21,7 +21,7 @@ const writeFile = (url, data) => {
     })
 }
 
-const mkdir = () => {
+const mkdir = (path) => {
     return new Promise((resolve, reject) => {
         fs.mkdir(path, { recursive: true }, err => {
             if (err) reject(err);

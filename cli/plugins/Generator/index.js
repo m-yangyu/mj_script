@@ -31,7 +31,7 @@ class Generator {
             beforeIndex: new SyncHook('beforeIndex'),
             afterIndex: new SyncHook('afterIndex'),
             beforeDir: new SyncHook('beforeDir'),
-            afterDir: new SyncHook('afterDir'),
+            afterDir: new AsyncSeriesWaterfallHook('afterDir'),
         }
         this.defaultPackageJson = require('./defaultPackage.json');
         // key: 文件名 ， value: 文件内容
@@ -54,14 +54,11 @@ class Generator {
             resolve();
         })
     }
-
-    createRootConfig = (resolve, reject) => {
-        Object.keys(this.defaultConfigName).map( async name => {
-            await copyFile(this.defaultConfigName[name], `${this.rootPath}/${name}`);
-        })
+    createRootConfig = async (resolve, reject) => {
+        await copyFile(this.defaultConfigName['readme.md'], `${this.rootPath}/readme.md`);
+        await copyFile(this.defaultConfigName.config, `${this.rootPath}/config`);
         resolve();
     }
-
     createBabelConfig = (resolve, reject) => {
         const babelStr = `module.exports = ${JSON.stringify(this.defaultBabelConfig, null, '\t')}`;
         writeFile(`${this.rootPath}/babel.config.js`, babelStr).then(() => {

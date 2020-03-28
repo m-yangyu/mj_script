@@ -4,10 +4,9 @@ const fsE = require('fs-extra');
 
 const copyFile = (currentPath, toPath) => {
     return new Promise((resolve, reject) => {
-        fsE.copy(currentPath, toPath).then(res => {
+        fsE.copy(currentPath, toPath, err => {
+            if (err) reject(err);
             resolve();
-        }).catch(e => {
-            reject(e);
         })
     })
 }

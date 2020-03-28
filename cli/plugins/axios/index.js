@@ -1,30 +1,27 @@
 const path = require('path');
+const fs = require('fs');
 const { copyFile } = require('../../tools/files');
 
-class Redux {
+class Axios {
     constructor() {
         this.packageVersion = {
-            "redux": "^4.0.5",
-            "redux-actions": "^2.6.5",
-            "redux-devtools-extension": "^2.13.8",
-            "redux-thunk": "^2.3.0",
-            "react-redux": "^7.2.0"
+            "axios": "^0.19.2"
         }
     }
     apply(gen) {
-        gen.hooks.beforePackageJson.tap('redux', () => {
+        gen.hooks.beforePackageJson.tap('axios', () => {
             const packageJson = gen.defaultPackageJson;
             const dependencies = packageJson.dependencies;
             Object.keys(this.packageVersion).map(name => {
                 dependencies[name] = this.packageVersion[name];
             })
         })
-        gen.hooks.afterDir.tapAsync('redux', (callback) => {
-            copyFile(path.resolve(__dirname, './redux'), `${gen.rootPath}/src/redux`).then(() => {
+        gen.hooks.afterDir.tapAsync('axios', (callback) => {
+            copyFile(path.resolve(__dirname, './http.js'), `${gen.rootPath}/src/common/http.js`).then(() => {
                 callback();
-            });
+            })
         })
     }
 }
 
-module.exports = Redux;
+module.exports = Axios;

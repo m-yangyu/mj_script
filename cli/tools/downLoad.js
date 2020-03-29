@@ -10,6 +10,7 @@ const {
 } = require('./packageChange')
 const configureFiles = require('./configureFiles');
 const { DIR } = require('../../config/static');
+const modulesLoad = require('../plugins');
 
 const { getDelConfig } = configureFiles;
 const getProgramName = (url) => {
@@ -61,32 +62,14 @@ const copyLoad = (renameParam) => {
         })
     })
 }
-
+// 使用了3种不同的方法，最终确认使用现在第三种下载模式
+// 1. 借用git进行下载
+// 2. 直接copy本地项目
+// 3. 将本地项目模块化，使用tapable的钩子的模式，进行模块的构建
 const downLoad = async (options, url, renameParam) => {
-    const { css, module, react } = options;
+    const { module } = options;
     
-    const dirName = await copyLoad(renameParam);
-    if (dirName) {
-        const spinner = ora({
-            text: '正在安装配置',
-            discardStdin: false
-        }).start();
-        try {
-            // 配置packagejson
-            const packagePath = `./${dirName}/package.json`;
-            const delConfig = getDelConfig([
-                ...module
-            ]);
-            const newJson = changeByOptions(packagePath, delConfig);
-
-            fs.writeFileSync(packagePath, JSON.stringify(newJson, null, 4));
-            // 配置相应的文件
-            configureFiles(`./${dirName}`, delConfig);
-            spinner.succeed('安装完成');
-        } catch(err) {
-            spinner.fail(`安装失败：\n ${chalk.red(err)}`);
-        }
-    }
+    modulesLoad(module, renameParam);
 }
 
 module.exports = {

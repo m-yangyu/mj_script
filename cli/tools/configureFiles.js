@@ -1,6 +1,11 @@
 const rimraf = require('rimraf');
+const fs = require('fs');
+const path = require('path');
+
+const plugins = fs.readdirSync(path.resolve(__dirname, '../plugins'));
 const modulesConfig = {
-    module: ['eslint', 'jest']
+    // module: ['eslint', 'jest']
+    module: plugins.filter(name => name !== 'index.js' && name !== 'Generator')
 }
 
 const rm = (filePath) => {

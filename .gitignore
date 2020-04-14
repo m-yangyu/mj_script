@@ -6,3 +6,4 @@ package-lock.json
 react/dist
 react/lib
 react/node_modules
+cli/localCache/cache.json

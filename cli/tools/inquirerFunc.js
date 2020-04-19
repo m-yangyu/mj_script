@@ -29,7 +29,6 @@ const getInquirerResult = async () => {
 }
 
 const getResult = async () => {
-    console.log(modulesConfig.framework);
     const moduleOptions = await inquirer.prompt({
         type: 'list',
         name: 'options',

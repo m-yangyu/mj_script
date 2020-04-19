@@ -7,7 +7,6 @@ const {
 
 module.exports = function() {
     const argvs = this.argvs.keyMap;
-    console.log(this.argvs);
     const methods = argvs['-m'] || argvs['--methods'];
     const url = argvs['-u'] || argvs['--url'];
     const name = argvs['-n'] || argvs['--name'];

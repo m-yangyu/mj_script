@@ -2,10 +2,17 @@ const rimraf = require('rimraf');
 const fs = require('fs');
 const path = require('path');
 
-const plugins = fs.readdirSync(path.resolve(__dirname, '../plugins'));
+const plugins = fs.readdirSync(path.resolve(__dirname, '../plugins/defaultPlugins'));
+const FrameWork = fs.readdirSync(path.resolve(__dirname, '../plugins/framework'));
+
 const modulesConfig = {
-    // module: ['eslint', 'jest']
-    module: plugins.filter(name => name !== 'index.js' && name !== 'Generator')
+    module: plugins,
+    framework: FrameWork
+}
+
+const filterModules = (frameworkName) => {
+    const options = require(path.resolve(__dirname, `../plugins/framework/${frameworkName}`));
+    return plugins.filter(name => !options.includes(name));
 }
 
 const rm = (filePath) => {
@@ -61,3 +68,4 @@ const getDelConfig = (need) => {
 module.exports = configureFiles;
 module.exports.modulesConfig = modulesConfig;
 module.exports.getDelConfig = getDelConfig;
+module.exports.filterModules = filterModules;

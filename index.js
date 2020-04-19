@@ -7,7 +7,10 @@ const build = require('./build');
 const addView = require('./add');
 const deploy = require('./deploy');
 const dll = require('./dll');
-const reactInit = require('./cli');
+const {
+    reactInit,
+    addPlugins
+} = require('./cli');
 const packageJson = require('./package.json');
 
 const program = new argvStore();
@@ -23,4 +26,9 @@ program
     .command('build:lib', 'dll文件构建', dll)
     .command('create', '初始化', reactInit)
     .options('-r --rename', '[yourname] 重命名')
+    .command('addPlugins', '添加插件', addPlugins)
+    .options('-m --methods', '添加插件/框架')
+    .options('-n --name', '重命名')
+    .options('-u --url', '从远处仓库拉取')
+    .options('-n --npm', '从npm拉取')
     .parse();

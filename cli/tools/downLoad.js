@@ -21,7 +21,7 @@ const getProgramName = (url) => {
 
 // 下载方法
 // 本质上是调用git clone把远程库给安装到本地
-const downLoadGit = (url, renameParam) => {
+const downLoadGit = (url, renameParam, cwd = __dirname) => {
     return new Promise((resolve, reject) => {
         const curName = renameParam || getProgramName(url);
         const spinner = ora({
@@ -32,7 +32,9 @@ const downLoadGit = (url, renameParam) => {
             'clone',
             url,
             curName
-        ])
+        ], {
+            cwd
+        })
 
         git.on('error', (err) => {
             reject(err);
@@ -74,5 +76,6 @@ const downLoad = async (options, url, renameParam) => {
 
 module.exports = {
     downLoad,
-    downLoadGit
+    downLoadGit,
+    getProgramName
 }

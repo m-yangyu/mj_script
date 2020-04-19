@@ -2,7 +2,7 @@ const path = require('path');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { readCacheOptions, setCacheOptions } = require(`${path.resolve(__dirname, '../localCache')}`);
-const { modulesConfig } = require('./configureFiles')
+const { modulesConfig, filterModules } = require('./configureFiles')
 
 const getInquirerResult = async () => {
     let data = {};
@@ -29,12 +29,21 @@ const getInquirerResult = async () => {
 }
 
 const getResult = async () => {
+    console.log(modulesConfig.framework);
     const moduleOptions = await inquirer.prompt({
+        type: 'list',
+        name: 'options',
+        message: '请选择下面的几种框架：',
+        choices: modulesConfig.framework
+    })
+
+    const otherModule = filterModules(moduleOptions.options);
+    const otherOptions = await inquirer.prompt({
         type: 'checkbox',
         name: 'options',
-        message: '请选择下面的几种插件：',
-        choices: modulesConfig.module
-    })
+        message: '请选择其他模块',
+        choices: otherModule
+    });
 
     const isCache = await inquirer.prompt({
         type: 'confirm',
@@ -43,6 +52,10 @@ const getResult = async () => {
     })
 
     let cacheName = {}
+    const options = [
+        ...require(path.resolve(__dirname, `../plugins/framework/${moduleOptions.options}`)),
+        ...otherOptions.options
+    ]
     if (isCache.cache) {
         while (!cacheName.name) {
             cacheName = await inquirer.prompt({
@@ -57,11 +70,11 @@ const getResult = async () => {
         }
         setCacheOptions({
             name: cacheName.name,
-            module: moduleOptions.options
+            module: options
         })
     }
     return {
-        module: moduleOptions.options
+        module: options
     }
 }
 

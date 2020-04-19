@@ -1,6 +1,9 @@
 .history/
 .DS_Store
 
+# 测试文件
+cli/localCache/cache.json
+
 # react 中的构建文件不上传
 react/dist
 react/lib

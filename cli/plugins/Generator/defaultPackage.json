@@ -16,10 +16,6 @@
     "author": "zhanan",
     "license": "ISC",
     "dependencies": {
-      "@hot-loader/react-dom": "^16.12.0",
-      "react": "^16.13.0",
-      "react-dom": "^16.13.0",
-      "react-hot-loader": "^4.12.19"
     },
     "devDependencies": {
       "mj-script": "^1.1.0",

@@ -13,8 +13,8 @@ const modulesNameArr = [
     'BabelConfig',
     'Template',
     'Dir',
-    'App',
-    'Index'
+    // 'App',
+    // 'Index'
 ]
 const callMap = {
     afterPackageJson: 'callAsync',

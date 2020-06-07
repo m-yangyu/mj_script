@@ -48,6 +48,7 @@ webpack的配置，支持基本的方法
 '-m --methods': 添加的内容（plugin / framework）
 '-n --name': 插件重命名
 '-u --url': git的连接
+'-c --current': 本地文件夹
 
 ```
 

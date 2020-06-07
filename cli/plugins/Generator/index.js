@@ -43,8 +43,6 @@ class Generator {
         this.defaultTemplate = {
             'index.tpl.ejs': path.resolve(__dirname, './template/index.tpl.ejs')
         };
-        // this.defaultApp = require('./src/app.js')();
-        // this.defaultIndex = require('./src/index')();
         this.rootPath = '';
     }
 
@@ -80,16 +78,6 @@ class Generator {
         await copyFile(path.resolve(__dirname, './src/assets'), `${this.rootPath}/src/assets`);
         resolve();
     }
-    // createApp = (resolve, reject) => {
-    //     writeFile(`${this.rootPath}/src/app.jsx`, this.defaultApp).then(() => {
-    //         resolve();
-    //     })
-    // }
-    // createIndex = (resolve, reject) => {
-    //     writeFile(`${this.rootPath}/src/index.js`, this.defaultIndex.getInfo()).then(() => {
-    //         resolve();
-    //     })
-    // }
 }
 
 module.exports =  Generator;

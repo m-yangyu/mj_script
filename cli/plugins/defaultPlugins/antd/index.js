@@ -1,10 +1,10 @@
 const path = require('path');
-const { copyFile, writeFile } = require('../../tools/files');
+const { copyFile, writeFile } = require('../../../tools/files');
 
 class Antd {
     constructor() {
         this.packageVersion = {
-            "antd": "^4.0.0",
+            "antd": "4.0.0",
         }
     }
     apply(gen) {

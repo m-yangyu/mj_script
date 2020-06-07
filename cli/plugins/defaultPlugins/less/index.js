@@ -1,10 +1,10 @@
-const { copyFile, writeFile, mkdir } = require('../../tools/files');
+const { copyFile, writeFile, mkdir } = require('../../../tools/files');
 
 class Less {
     constructor() {
-        this.lessVersion = '^3.11.1'
-        this.lessLoaderVersion = '^5.0.0'
-        this.sassResourcesLoader = '^2.0.1';
+        this.lessVersion = '3.11.1'
+        this.lessLoaderVersion = '5.0.0'
+        this.sassResourcesLoader = '2.0.1';
     }
     apply(gen) {
         gen.hooks.beforePackageJson.tap('less', () => {

@@ -13,8 +13,8 @@ const modulesNameArr = [
     'BabelConfig',
     'Template',
     'Dir',
-    'App',
-    'Index'
+    // 'App',
+    // 'Index'
 ]
 const callMap = {
     afterPackageJson: 'callAsync',
@@ -28,9 +28,9 @@ const createGenerator = () => {
 const createPlugins = (gen, options) => {
     options.map(name => {
         try {
-            require(`./${name}`).apply(gen);
+            require(`./defaultPlugins/${name}`).apply(gen);
         } catch (e){
-            const plugin = new (require(`./${name}`));
+            const plugin = new (require(`./defaultPlugins/${name}`));
             plugin.apply(gen);
         }
     })
@@ -62,7 +62,6 @@ const modulesLoad = async (options, renameParam) => {
         text: '正在下载',
         discardStdin: false
     }).start();
-
     createPlugins(gen, options);    
     gen.hooks.startGenerator.call();
     await mkdir(rootPath)

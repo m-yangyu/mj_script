@@ -1,14 +1,14 @@
 const path = require('path');
-const { copyFile } = require('../../tools/files');
+const { copyFile } = require('../../../tools/files');
 
 class Redux {
     constructor() {
         this.packageVersion = {
-            "redux": "^4.0.5",
-            "redux-actions": "^2.6.5",
-            "redux-devtools-extension": "^2.13.8",
-            "redux-thunk": "^2.3.0",
-            "react-redux": "^7.2.0"
+            "redux": "4.0.5",
+            "redux-actions": "2.6.5",
+            "redux-devtools-extension": "2.13.8",
+            "redux-thunk": "2.3.0",
+            "react-redux": "7.2.0"
         }
     }
     apply(gen) {

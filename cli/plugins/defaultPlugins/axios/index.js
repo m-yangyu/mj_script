@@ -1,11 +1,11 @@
 const path = require('path');
 const fs = require('fs');
-const { copyFile } = require('../../tools/files');
+const { copyFile } = require('../../../tools/files');
 
 class Axios {
     constructor() {
         this.packageVersion = {
-            "axios": "^0.19.2"
+            "axios": "0.19.2"
         }
     }
     apply(gen) {

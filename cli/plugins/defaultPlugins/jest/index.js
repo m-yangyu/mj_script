@@ -1,11 +1,11 @@
 const path = require('path');
-const { copyFile } = require('../../tools/files');
+const { copyFile } = require('../../../tools/files');
 
 class Jest {
     constructor() {
         this.packageVersion = {
-            "babel-jest": "^24.9.0",
-            "jest": "^24.9.0"
+            "babel-jest": "24.9.0",
+            "jest": "24.9.0"
         }
         this.scripts = {
             "test": "jest --passWithNoTests",

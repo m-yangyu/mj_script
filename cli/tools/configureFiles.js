@@ -7,11 +7,18 @@ const FrameWork = fs.readdirSync(path.resolve(__dirname, '../plugins/framework')
 
 const modulesConfig = {
     module: plugins,
-    framework: FrameWork
+    framework: [
+        ...FrameWork,
+        'other'
+    ]
 }
 
 const filterModules = (frameworkName) => {
-    const options = require(path.resolve(__dirname, `../plugins/framework/${frameworkName}`));
+    const frameworkDir = path.resolve(__dirname, `../plugins/framework/${frameworkName}`);
+    if (!fs.existsSync(frameworkDir)) {
+        return plugins;
+    }
+    const options = require(frameworkDir);
     return plugins.filter(name => !options.includes(name));
 }
 

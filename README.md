@@ -5,6 +5,9 @@ webpack的配置，支持基本的方法
 - build
 - dev
 - analyz
+- build:lib
+- build:pre
+- depoly
 
 ## script
 
@@ -35,6 +38,20 @@ webpack的配置，支持基本的方法
 ### mj-script create
 
 创建新项目，可添加参数`-r --rename` 用来重写文件夹名称
+
+### mj-script addPlugins
+
+添加一个新的插件，插件用于下载对应的模板内容
+
+``` javascript
+
+'-m --methods': 添加的内容（plugin / framework）
+'-n --name': 插件重命名
+'-u --url': git的连接
+
+```
+
+[插件系统说明](https://github.com/HuskyToMa/mj_script/tree/master/cli)
 
 ## 模块内容
 

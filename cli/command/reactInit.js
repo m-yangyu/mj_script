@@ -9,7 +9,6 @@ const reactInit = async function(){
     const downLoadTypes = readFileSync(path.resolve(__dirname, './typeManifest.json'));
     const renameParam = argv['-r'] || argv['--rename'] || '';
     const options = await getInquirerResult();
-
     const url = downLoadTypes.react;
     downLoad(options, url, renameParam);
 }

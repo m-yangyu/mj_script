@@ -11,7 +11,7 @@ const {
     AsyncSeriesHook,
     AsyncSeriesBailHook,
     AsyncSeriesWaterfallHook
-} = require('tapable')
+} = require('tapable');
 
 class Generator {
     constructor() {
@@ -74,7 +74,8 @@ class Generator {
     }
     createDir = async (resolve, reject) => {
         await mkdir(`${this.rootPath}/src`);
-        await copyFile(path.resolve(__dirname, './src/common'), `${this.rootPath}/src/common`);
+        // await copyFile(path.resolve(__dirname, './src/common'), `${this.rootPath}/src/common`);
+        await mkdir(`${this.rootPath}/src/common`);
         await copyFile(path.resolve(__dirname, './src/components'), `${this.rootPath}/src/components`);
         await copyFile(path.resolve(__dirname, './src/assets'), `${this.rootPath}/src/assets`);
         resolve();

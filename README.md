@@ -35,6 +35,17 @@ webpack的配置，支持基本的方法
 
 打包dll依赖
 
+### mj-script add
+
+添加模板进当前项目
+
+``` javascript
+
+'-s --select': 写入模板名称，即可不用选择
+'-t --template': 添加模板
+
+```
+
 ### mj-script create
 
 创建新项目，可添加参数`-r --rename` 用来重写文件夹名称

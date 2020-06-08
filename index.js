@@ -22,6 +22,8 @@ program
     .command('dev', '开发', devServer)
     .command('analyz', '分析', () => build({isAnalyz: true}))
     .command('add', '添加新页面', addView)
+        .options('-t --template')
+        .options('-s --select')
     .command('deploy', '部署', deploy)
     .command('build:lib', 'dll文件构建', dll)
     .command('create', '初始化', reactInit)

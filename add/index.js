@@ -1,54 +1,78 @@
+const path = require('path');
 const fs = require('fs');
-const { viewDIR } = require('../config/static/index');
-const getTemplate = require('./template/reactTpl');
 const inquirer = require('inquirer');
+const { DIR } = require('../config/static/index');
+const {
+    copyFile,
+    hasPath,
+    getDirNameByPath,
+    mkdir
+} = require('../cli/tools/files')
 
-const getAnswer = async (options) => {
-    const { name } = options;
-    return (await inquirer.prompt(options))[name];
-}
-
-const errCallback = err => {
-    if (err) throw err;
+const addNewTemplate = (templateName) => {
+    const currentFile = path.resolve(DIR, templateName);
+    if (/.js|.ts|.jsx|.tsx|.vue/.test(currentFile)) {
+        console.error('只允许上传文件夹，请不要上传单个模板文件');
+        return ;
+    }
+    hasPath(currentFile).then((res) => {
+        if (res) {
+            const dirName = getDirNameByPath(templateName);
+            copyFile(
+                currentFile,
+                path.resolve(__dirname, `./template/${dirName}`)
+            );
+        } else {
+            console.error('当前文件不存在');
+        }
+        
+    })
 }
 
 module.exports = async function() {
+    const argvs = this.argvs.keyMap;
+    const addTemplate = argvs['-t'] || argvs['--template'];
+    if (addTemplate) {
+        addNewTemplate(addTemplate);
+    } else {
+        let templateName = argvs['-s'] || argvs['--select'];
+        if (!templateName) {
+            const templateArr = fs.readdirSync(path.resolve(__dirname, './template'));
+            
+            if (!templateArr.length) {
+                console.error('请先添加模板');
+                return ;
+            }
 
-    let name = '';
-
-    while(!name || fs.existsSync(`${viewDIR}/${name}`)) {
-
-        if (name) {
-            console.log('文件名已存在，请重新输入');
+            const op = await inquirer.prompt({
+                type: 'list',
+                name: 'option',
+                message: '请选择模板：',
+                choices: templateArr
+            })
+            templateName = op.option;
         }
-
-        name = await getAnswer({
-            name: 'name',
-            type: 'input',
-            message: '请输入新增的文件夹名称'
+        const currentPath = path.resolve(__dirname, `./template/${templateName}`);
+        hasPath(currentPath).then(async (res) => {
+            if (res) {
+                const { dirName } = await inquirer.prompt({
+                    type: 'input',
+                    name: 'dirName',
+                    message: '请输入写入的文件夹路径',
+                })
+                let rootPath = '';
+                if (/.\//.test(dirName)) {
+                    rootPath = path.resolve(DIR, dirName);
+                }
+                const toPath = path.resolve(rootPath, templateName);
+                await mkdir(toPath)
+                copyFile(
+                    currentPath,
+                    toPath
+                )
+            } else {
+                console.error('该模板不存在，请先添加');
+            }
         })
     }
-
-    const type = await getAnswer({
-        type: 'list',
-        name: 'type',
-        message: '请选择要创建的react模板：',
-        choices: ['class', 'hook']
-    });
-
-    const style = await getAnswer({
-        type: 'list',
-        name: 'style',
-        message: '请选择要使用的预编译器：',
-        choices: ['less', 'scss']
-    })
-
-    const template = getTemplate(type, name, style);
-    const dirPath = `${viewDIR}/${name}`;
-    fs.mkdir(dirPath, { recursive: true }, err => {
-        if (err) throw err;
-
-        fs.writeFile(`${dirPath}/index.jsx`, template, errCallback);
-        fs.writeFile(`${dirPath}/index.module.${style}`, '', errCallback);
-    })
 }

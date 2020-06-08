@@ -29,8 +29,27 @@ const mkdir = (path) => {
     })
 }
 
+const emptyDir = (path) => {
+    return fsE.emptyDir(path);
+}
+
+const getDirNameByPath = (path) => {
+    let currentDirNameArr = path.split('/');
+    if (~path.indexOf('\\')) {
+        currentDirNameArr = path.split('\\');
+    }
+    return currentDirNameArr[currentDirNameArr.length - 1];
+}
+
+const hasPath = (path) => {
+    return fsE.pathExists(path);
+}
+
 module.exports = {
     copyFile,
     writeFile,
-    mkdir
+    mkdir,
+    emptyDir,
+    getDirNameByPath,
+    hasPath
 }

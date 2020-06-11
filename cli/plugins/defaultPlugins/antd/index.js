@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const { copyFile, writeFile } = require('../../../tools/files');
 
 class Antd {
@@ -15,8 +16,8 @@ class Antd {
                 dependencies[name] = this.packageVersion[name];
             })
         })
-        gen.hooks.afterRootConfig.tap('antd', () => {
-            copyFile(path.resolve(__dirname, './antd.theme.js'), `${gen.rootPath}/config/antd.theme.js`)
+        gen.hooks.afterRootConfig.tap('antd', async () => {
+            await copyFile(path.resolve(__dirname, './antd.theme.js'), `${gen.rootPath}/config/antd.theme.js`)
         })
     }
 }

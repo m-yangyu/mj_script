@@ -23,9 +23,7 @@ class Generator {
             afterPackageJson: new AsyncSeriesWaterfallHook('afterPackageJson'),
             afterRootConfig: new SyncHook('afterRootConfig'),
             beforeBabelConfig: new SyncHook('beforeBabelConfig'),
-            afterBabelConfig: new SyncHook('afterBabelConfig'),
-            beforeTemplate: new SyncHook('beforeTemplate'),
-            afterTemplate: new SyncHook('afterTemplate'),
+            afterBabelConfig: new AsyncSeriesWaterfallHook('afterBabelConfig'),
             beforeApp: new SyncHook('beforeApp'),
             afterApp: new SyncHook('afterApp'),
             beforeIndex: new SyncHook('beforeIndex'),
@@ -35,47 +33,29 @@ class Generator {
         }
         this.defaultPackageJson = require('./defaultPackage.json');
         // key: 文件名 ， value: 文件内容
-        this.defaultConfigName = {
-            'readme.md': path.resolve(__dirname, './defaultReadme.md'),
-            'config': path.resolve(__dirname, './config')
-        };
-        this.defaultBabelConfig = require('./defaultBabel');
-        this.defaultTemplate = {
-            'index.tpl.ejs': path.resolve(__dirname, './template/index.tpl.ejs')
-        };
         this.rootPath = '';
+        this.createConfig = false;
     }
-
-    createPackageJson = (resolve, reject) => {
+    createPackageJson = (resolve) => {
         writeFile(`${this.rootPath}/package.json`, JSON.stringify(this.defaultPackageJson, null, '\t'), err => {
             if (err) throw err;
+        }).then(() => {
             resolve();
         })
     }
-    createRootConfig = async (resolve, reject) => {
-        await copyFile(this.defaultConfigName['readme.md'], `${this.rootPath}/readme.md`);
-        await copyFile(this.defaultConfigName.config, `${this.rootPath}/config`);
-        resolve();
-    }
-    createBabelConfig = (resolve, reject) => {
-        const babelStr = `module.exports = ${JSON.stringify(this.defaultBabelConfig, null, '\t')}`;
-        writeFile(`${this.rootPath}/babel.config.js`, babelStr).then(() => {
+    createRootConfig = (resolve) => {
+        if (this.createConfig) {
+            mkdir(`${this.rootPath}/config`).then(() => {
+                resolve();
+            })
+        } else {
             resolve();
-        })
+        }
     }
-    createTemplate = async (resolve, reject) => {
-        await mkdir(`${this.rootPath}/template`);
-        Object.keys(this.defaultTemplate).map(async name => {
-            await copyFile(this.defaultTemplate[name], `${this.rootPath}/template/${name}`);
-        })
+    createBabelConfig = (resolve) => {
         resolve();
     }
-    createDir = async (resolve, reject) => {
-        await mkdir(`${this.rootPath}/src`);
-        // await copyFile(path.resolve(__dirname, './src/common'), `${this.rootPath}/src/common`);
-        await mkdir(`${this.rootPath}/src/common`);
-        await copyFile(path.resolve(__dirname, './src/components'), `${this.rootPath}/src/components`);
-        await copyFile(path.resolve(__dirname, './src/assets'), `${this.rootPath}/src/assets`);
+    createDir = (resolve) => {
         resolve();
     }
 }

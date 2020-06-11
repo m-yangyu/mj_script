@@ -11,14 +11,12 @@ const modulesNameArr = [
     'PackageJson',
     'RootConfig',
     'BabelConfig',
-    'Template',
     'Dir',
-    // 'App',
-    // 'Index'
 ]
 const callMap = {
     afterPackageJson: 'callAsync',
-    afterDir: 'callAsync'
+    afterDir: 'callAsync',
+    afterBabelConfig: 'callAsync'
 }
 
 const createGenerator = () => {
@@ -37,19 +35,20 @@ const createPlugins = (gen, options) => {
     gen.hooks.afterCreatePlugin.call();
 }
 
-const doneFunc = (gen, name) => {
+
+
+const doneFunc = async (gen, name) => {
     const beforeName = `before${name}`;
     const afterName = `after${name}`;
     gen.hooks[beforeName] && gen.hooks[beforeName][callMap[beforeName] || 'call']();
-    getPromiseFunc(gen[`create${name}`])().then(() => {
-        if (callMap[afterName] === 'callAsync') {
+    return getPromiseFunc(gen[`create${name}`])().then(() => {
+        if (callMap[afterName]) {
             gen.hooks[afterName][callMap[afterName]](err => {
                 if (err) throw err;
             });
         } else {
             gen.hooks[afterName].call();
         }
-        
     })
 }
 

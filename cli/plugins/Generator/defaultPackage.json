@@ -4,13 +4,6 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "build": "mj-script build",
-      "dev": "mj-script dev",
-      "build:pre": "mj-script build:pre",
-      "analyz": "mj-script analyz",
-      "add": "mj-script add",
-      "deploy": "mj-script deploy",
-      "build:lib": "mj-script build:lib"
     },
     "pre-commit": [],
     "author": "zhanan",

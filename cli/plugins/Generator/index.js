@@ -24,10 +24,6 @@ class Generator {
             afterRootConfig: new SyncHook('afterRootConfig'),
             beforeBabelConfig: new SyncHook('beforeBabelConfig'),
             afterBabelConfig: new AsyncSeriesWaterfallHook('afterBabelConfig'),
-            beforeApp: new SyncHook('beforeApp'),
-            afterApp: new SyncHook('afterApp'),
-            beforeIndex: new SyncHook('beforeIndex'),
-            afterIndex: new SyncHook('afterIndex'),
             beforeDir: new SyncHook('beforeDir'),
             afterDir: new AsyncSeriesWaterfallHook('afterDir'),
         }

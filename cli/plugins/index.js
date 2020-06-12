@@ -55,13 +55,13 @@ const doneFunc = async (gen, name) => {
 const modulesLoad = async (options, renameParam) => {
 
     const gen = createGenerator();
-    const rootPath = `${DIR}/${renameParam || 'react'}`;
+    const rootPath = `${DIR}/${renameParam || 'template'}`;
     gen.rootPath = rootPath;
     const spinner = ora({
         text: '正在下载',
         discardStdin: false
     }).start();
-    createPlugins(gen, options);    
+    createPlugins(gen, options);
     gen.hooks.startGenerator.call();
     await mkdir(rootPath)
     modulesNameArr.map(async name => {

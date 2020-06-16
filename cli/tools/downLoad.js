@@ -63,7 +63,7 @@ const copyLoad = (renameParam) => {
 // 1. 借用git进行下载
 // 2. 直接copy本地项目
 // 3. 将本地项目模块化，使用tapable的钩子的模式，进行模块的构建
-const downLoad = async (options, url, renameParam) => {
+const downLoad = async (options, renameParam) => {
     const { module } = options;
     
     modulesLoad(module, renameParam);

@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
 const argvStore = require('argv_store');
 const devServer = require('./devServer');
 const build = require('./build');
@@ -9,7 +7,8 @@ const deploy = require('./deploy');
 const dll = require('./dll');
 const {
     reactInit,
-    addPlugins
+    addPlugins,
+    createPluginTemplate,
 } = require('./cli');
 const packageJson = require('./package.json');
 

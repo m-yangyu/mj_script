@@ -45,11 +45,26 @@ const hasPath = (path) => {
     return fsE.pathExists(path);
 }
 
+const readFilesStream = (path) => {
+    return new Promise((resolve, reject) => {
+        const stream = fs.createReadStream(path);
+        let data = '';
+        stream.on('data', (chunk) => {
+            data += chunk;
+        })
+        stream.on('end', (err) => {
+            if (err) reject(err)
+            resolve(data);
+        })
+    })
+}
+
 module.exports = {
     copyFile,
     writeFile,
     mkdir,
     emptyDir,
     getDirNameByPath,
-    hasPath
+    hasPath,
+    readFilesStream
 }

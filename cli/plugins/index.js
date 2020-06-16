@@ -1,7 +1,4 @@
-const path = require('path');
-const fs = require('fs');
-const fsE = require('fs-extra');
-const { copyFile, writeFile, mkdir } = require('../tools/files');
+const { mkdir } = require('../tools/files');
 const { getPromiseFunc } = require('../tools/utils');
 const { DIR } = require('../../config/static');
 const Generator = require('./Generator');

@@ -52,3 +52,4 @@ class React {
 }
 
 module.exports = React;
+

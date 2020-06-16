@@ -7,6 +7,15 @@ class React {
         this.packageVersion = {
             "mj-script": "1.3.5",
         }
+        this.scripts = {
+            "build": "mj-script build",
+            "dev": "mj-script dev",
+            "build:pre": "mj-script build:pre",
+            "analyz": "mj-script analyz",
+            "add": "mj-script add",
+            "deploy": "mj-script deploy",
+            "build:lib": "mj-script build:lib"
+        }
         this.configPath = path.resolve(__dirname, './config')
         this.defaultConfigName = {
             'readme.md': path.resolve(__dirname, './defaultReadme.md'),
@@ -17,8 +26,12 @@ class React {
         gen.hooks.beforePackageJson.tap('mjScript', () => {
             const packageJson = gen.defaultPackageJson;
             const dev = packageJson.devDependencies;
+            const script = packageJson.scripts;
             Object.keys(this.packageVersion).map(name => {
                 dev[name] = this.packageVersion[name];
+            })
+            Object.keys(this.scripts).forEach(name => {
+                script[name] = this.scripts[name];
             })
         })
         gen.hooks.afterRootConfig.tap('mjScript', async () => {

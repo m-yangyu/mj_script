@@ -1,151 +1,183 @@
 # mj-script
 
-webpack的配置，支持基本的方法
+mj-script是一个集构建，打包，发布，脚本命令为一体的一个脚手架包，提供除基本构建以外的能力
 
-- build
-- dev
-- analyz
-- build:lib
-- build:pre
-- depoly
+## 创建脚手架
 
-## script
+`mj-script create`
 
-### mj-script build
+`mj-script create -r [yourName]`
 
-打包命令，在项目文件中能够通过添加`${DIR}/config/proConfig.js`文件，来替换或者新增一些新的`webpack`属性，该文件的内容会通过`webpack-merge`合并到现在已经存在的文件中
+在mj-script默认的脚手架中，存放了一套基于react，redux，react-router的脚手架，提供基础的开发，生产，预生产打包能力，可依据自己个人的选择去挑选对应的额外能力
 
-### mj-script dev
+添加-r命令的话， 是可以重新定制生成的文件夹名
 
-与上一个命令相似，配置文件的目录是`${DIR}/config/devConfig.js`
+### 运行命令
 
-### mj-script analyz
+运行上述命令之后， 会出现一个选择之前是否存放的模板页面，如果不想使用之前保存的配置，可选择other
 
-会使用`webpack-build-analyz`插件生成构建文件的包大小，可以使用该命令查看对应的包大小
+如果选择了other， 则会出现选择framework窗口, default是默认存在的，内部包含了
 
-### mj-script build:pre
+1. antd
+2. axios
+3. exlint
+4. jest
+5. reactRouter
+6. redux
+7. react
+8. mjScript
 
-预生产环境，除了对应的环境变量有不同以外，跟生产环境不会有什么区分，同样的可以通过`${DIR}/config/preConfig.js`文件来修改对应的`webpack`参数
+当然, 你还可以不选择使用default, 而是用自己生成的内容, 选择other即可, 这时候会提示让你选择其他插件, 如果没有选择framework, 则会将当前的所有插件列表显示在界面上(插件后续再讲)
 
-### mj-script depoly
+选择结束即可开始构建， 构建过程是在本地进行拷贝的过程， 所以速度上来讲不会比较慢，也没有网络影响
 
-一键部署，直接部署至对应的服务器
+## 构建能力
 
-### mj-script build:lib
+增加了基础构建能力， 原在内部直接存在的代码， 脱离生成了一个mjScript插件，包含了以下内容
 
-打包dll依赖
+1. build
+2. pre-build
+3. dev
+4. depoly
+5. analyz
+6. build:lib
 
-### mj-script add
+提供了基础能力， depoly的能力还有欠缺， 只能提供基础的上传能力， 没法进行项目管理以及项目迭代
 
-添加模板进当前项目
+## 添加页面
+
+提供了页面模板维护的能力，即可以讲当前的页面模板直接上传至总包地方，通过命令下载对应的模板
+
+### 添加页面模板
+
+`mj-script add -t [yourDirPath]`
+
+path必须是一个文件夹， 不存放单纯的文件， 如果存在文件可能会报错，暂时还没有发现这个问题， 在内部会将文件内容处理，但是只存在一部分类型的文件，没有针对所有文件进行处理
+
+### 生成页面
+
+`mj-script add -s [yourTemplateName]`
+
+`mj-script add`
+
+生成页面的方法有两种模式， 如果加上-s是可以直接进行安装， 不需要在选择对应的模板页面
+
+## 添加framework
+
+`mj-script addPlugins -m framework -c [dirPath]`
+
+framework是最简单的一个模块， 只是单纯的一个数组集合，内部存放的是各个插件的内容，例如default也是一个framework，他内部存在的是
 
 ``` javascript
 
-'-s --select': 写入模板名称，即可不用选择
-'-t --template': 添加模板
+module.exports = [
+    'antd',
+    'axios',
+    'eslint',
+    'jest',
+    'reactRouter',
+    'redux',
+    'react',
+    'mjScript'
+]
 
 ```
 
-### mj-script create
-
-创建新项目，可添加参数`-r --rename` 用来重写文件夹名称
-
-### mj-script addPlugins
-
-添加一个新的插件，插件用于下载对应的模板内容
-
-``` javascript
-
-'-m --methods': 添加的内容（plugin / framework）
-'-n --name': 插件重命名
-'-u --url': git的连接
-'-c --current': 本地文件夹
-
-```
+## 添加plugins
 
 [插件系统说明](https://github.com/HuskyToMa/mj_script/tree/master/cli)
 
-## 模块内容
+插件系统是整个项目最为核心的内容， 基于`webpack`的核心模块`tapable`来实现
 
-### 持久化缓存
+### plugin是什么
 
-使用contenthash以及将moduleid设置为hash，达到持久化缓存的目的，当只有文件修改的时候才会去创建新的hash
+上述framework导出的每个字符串都对应一个相应的插件，即framework实际上是导出一个插件的集合， 而插件是生成项目代码的基础
 
-分离runtime以及manifest文件，用于缓存
+### 创建一个plugin
 
-### 兼容less和sass以及cssModule
+`mj-script addPlugins -c [dirPath]`
 
-`less`和`sass`的模块化内容都可以使用，下载项目中不需要设置`less`或者`sass`，都可以直接使用
+首先， 在创建过程中，提供了10个钩子
 
-如果对应的文件中添加了module名称则会使用模块化，默认的`module：true`, 例如： `index.modlue.scss`
+1. startGenerator
+2. endGenerator
+3. afterCreatePlugin
+4. beforePackageJson
+5. afterPackageJson
+6. afterRootConfig
+7. beforeBabelConfig
+8. afterBabelConfig
+9. beforeDir
+10. afterDir
 
-### gzip压缩
+before的钩子，尽量不要使用有副作用的方法， 因为暂时部分的插件，在使用过程中，before跟after的调用时间可能忽略不计
 
-默认不采用gzip压缩，如果想使用的话，可以通过script设置 `ENV_GZIP=1`即可
+其中3个钩子使用的是AsyncSeriesWaterfallHook，其余都是SyncHook
 
-### pxToRem
+3个特殊钩子
 
-脚手架默认没有设置这个插件，如果有需求可以通过对应的文件去进行设置，虽然现在很多的都是用750的屏幕做的ui图，但是也可能会有不同，所以这边没有将转换的内容直接写入脚手架而是通过自定义的方式自行写入
+1. afterPackageJson
+2. afterBabelConfig
+3. afterDir
 
-### 单页与多页
+一个react的插件示例
 
-目前脚手架会在`src/view`的目录下寻找是否存在`index.js`，如果存在，即构建单页的方式，如果不存在，则需要在`src/view/${yourDirName}`的文件夹中创建`index.js`实现多页打包,模板统一使用`template`文件中的内容，可通过配置文件重新设置entry来实现修正
+``` javascript
 
-### alisa
+const path = require('path');
+const {
+    writeFile,
+    mkdir,
+    copyFile
+} = require('../../../tools/files');
 
-目前在脚手架中只有两个对应的命名缩写：
+class React {
+    constructor() {
+        this.packageVersion = {
+            "@hot-loader/react-dom": "16.12.0",
+            "react": "16.13.0",
+            "react-dom": "16.13.0",
+            "react-hot-loader": "4.12.19"
+        }
+        this.defaultApp = require('./src/app.js')();
+        this.defaultIndex = require('./src/index')();
+        this.defaultBabelConfig = require('./defaultBabel');
+        this.defaultTemplate = path.resolve(__dirname, './template');
+    }
+    // gen是一个构件类， 内部有很多钩子，以及一些构建的时候触发的控制器
+    apply(gen) {
+        gen.hooks.beforePackageJson.tap('react', () => {
+            const packageJson = gen.defaultPackageJson;
+            const dev = packageJson.devDependencies;
+            Object.keys(this.packageVersion).map(name => {
+                dev[name] = this.packageVersion[name];
+            })
+        })
+        gen.hooks.afterPackageJson.tapAsync('react', (callback) => {
+            copyFile(this.defaultTemplate, `${gen.rootPath}/template`).then(() => {
+                callback();
+            })
+        })
+        gen.hooks.beforeDir.tap('react', async () => {
+            await mkdir(`${gen.rootPath}/src`);
+            await mkdir(`${gen.rootPath}/src/common`);
+            await copyFile(path.resolve(__dirname, './src/components'), `${gen.rootPath}/src/components`);
+            await copyFile(path.resolve(__dirname, './src/assets'), `${gen.rootPath}/src/assets`);
+        })
+        gen.hooks.afterDir.tapAsync('react', (callback) => {
+            writeFile(`${gen.rootPath}/src/app.jsx`, this.defaultApp);
+            writeFile(`${gen.rootPath}/src/index.js`, this.defaultIndex.getInfo());
+            callback();
+        })
+        gen.hooks.afterBabelConfig.tapAsync('react', (callback) => {
+            const babelStr = `module.exports = ${JSON.stringify(this.defaultBabelConfig, null, '\t')}`;
+            writeFile(`${gen.rootPath}/babel.config.js`, babelStr).then(() => {
+                callback();
+            })
+        })
+    }
+}
 
-- @：对应项目文件的src目录
-- ~：对应项目文件的utils目录，如果不存在这个目录需自行创建
+module.exports = React;
 
-### 开发环境跟生产环境差异
-
-1. 开发环境是不分离css
-2. 开发环境不会生成serviceWork对应的文件
-3. 开发环境不会生成manifest文件
-4. 开发环境不会进行gzip压缩
-5. 开发环境不会对js进行压缩，但是会生成map文件
-
-### happypack
-
-脚手架会自动根据当前服务器的cpu去选择是否启动happypack，如果使用的机器cpu只有一个那么就不会启动happypack
-
-### 可默认带入公用less或者sass文件
-
-项目目录中存在`src/common`，如果存在`common.less`以及`common.scss`文件，webpack打包的时候会默认将这两个文件导入，使用的时候可以选择less或者sass来使用
-
-### 可配置的antd的主题样式
-
-在`src/config`目录下存在`antd.theme.js`文件，可以修改对应的样式内容
-
-### assets
-
-assets文件夹会被打包到`./assets`文件夹中，所以如果使用图片或者第三方静态资源的时候，可以有两手考虑
-
-1. 使用assets，直接写相对路径
-2. 使用import引入，但是文件别放在assets，不然会导致打包之后文件重复
-3. 推荐在样式中使用assets的内容，减少编译
-
-### pre-commit
-
-如果存在`eslint`以及`jest`，那么在commit的时候会默认调用`lint`以及`test`命令，执行通过在上传代码
-
-### 
-
-### dllPlugin
-
-dllPlugin 默认会将`packageJson`下的`dependencies`全部进行打包进去，可以通过项目下`config/dllConfig.js`进行文件配置，里面配置的文件是不需要进入dll打包的文件
-
-## 注意事项
-
-1. 代码下载下来之后会在`src/style`目录下存在`less`跟`scss`文件，可以选择其一进行使用
-2. 代码中存在很多demo文件，是否删除由各自确认
-
-## 后续增加计划
-
-1. 添加vue的项目
-2. ts创建支持
-3. 可视化项目搭建
-4. ssr搭建
-5. 构建的depolyer的支持（多项目配置，项目开发，测试，预生产，生产流程规划）
-6. depolyer支持登陆，企业级部署（企业内部部署，用户权限控制）
+```

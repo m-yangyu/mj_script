@@ -1,16 +1,17 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
 const argvStore = require('argv_store');
 const devServer = require('./devServer');
 const build = require('./build');
 const addView = require('./add');
 const deploy = require('./deploy');
 const dll = require('./dll');
+const services = require('./services/cli');
 const {
     reactInit,
-    addPlugins
+    addPlugins,
 } = require('./cli');
+const getOriginPlugins = require('./services/cli/sync');
+const serverConfig = require('./serveConfig');
 const packageJson = require('./package.json');
 
 const program = new argvStore();
@@ -33,4 +34,12 @@ program
         .options('-u --url', '从远处仓库拉取')
         .options('-n --npm', '从npm拉取')
         .options('-c --current', '从当前目录复制')
+    .command('services', '启动服务', services)
+        .options('stop', '关闭服务')
+        .options('restart', '重启服务')
+    .command('sync', '同步服务器的插件与框架', getOriginPlugins)
+        .options('-ip', '重新设置获取服务器的ip地址')
+        .options('-port', '端口号')
+    .command('config', '配置', serverConfig)
+        .options('set', '设置')
     .parse();

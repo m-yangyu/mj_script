@@ -12,3 +12,11 @@ react/node_modules
 # npm构建
 node_modules/
 package-lock.json
+
+# 存放默认文件的路径
+add/template
+temp
+pluginsZip
+
+# 测试文件
+test.js

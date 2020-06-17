@@ -14,7 +14,7 @@ class React {
             "analyz": "mj-script analyz",
             "add": "mj-script add",
             "deploy": "mj-script deploy",
-            "build:lib": "mj-script build:lib"
+            "build:lib": "mj-script build:lib",
         }
         this.configPath = path.resolve(__dirname, './config')
         this.defaultConfigName = {

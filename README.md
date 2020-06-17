@@ -181,3 +181,25 @@ class React {
 module.exports = React;
 
 ```
+
+## 插件同步
+
+支持同局域网， 或者网络环境下的插件，框架，模板页面同步
+
+### 使用方法
+
+至少需要两台主机来实现对应的能力，以其中一台为服务端，一台为客户端
+
+服务端需要开启本地的服务`mj-script services`
+
+使用`mj-script services stop` 可以关闭当前服务
+
+使用`mj-script services restart` 可以重启当前服务
+
+客户端同步的脚本命令为`mj-script sync`，这个是默认的`ip：127.0.0.1`与`port：1234`，如果需要更改则需要运行另外的脚本
+
+也可使用`mj-script sync -ip x.x.x.x -prot 1234`来单独获取插件
+
+`mj-script config` 获取本地跟服务器相关的配置
+
+`mj-script config set -ip x.x.x.x -port 1234` 目前是只有这两个配置， 后续新增配置的话，写法雷同，在对应的`key`前面加`-`

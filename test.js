@@ -1,10 +1,6 @@
-const Axios = require('axios').default;
 const fs = require('fs');
+const request = require('request');
+const decompress = require('decompress');
 
-Axios.get('http://localhost:1234/download?plugin_name=antd').then((res) => {
-    const { data } = res;
-    console.log(data);
-    const stream = fs.createWriteStream(`antd.zip`);
-    stream.write(data);
-    // fs.writeFileSync('antd.zip', data, 'binary');
-})
+// const stream = fs.createWriteStream('antd.zip');
+// request('http://127.0.0.1:1234/download/plugin?plugin_name=antd').pipe(stream);

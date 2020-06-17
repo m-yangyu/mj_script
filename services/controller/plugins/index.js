@@ -6,8 +6,19 @@ const {
     frameworkPath
 } = require('../../config');
 const {
-    readFilesStream
+    readFilesStream,
+    mkdir,
+    hasPath,
 } = require('../../../cli/tools/files');
+const {
+    cliPath
+} = require('../../../config/static')
+
+const needZipPath = {
+    plugin: pluginsPath,
+    framework: frameworkPath,
+    addView: `${cliPath}/add/template`
+}
 
 class PluginController {
     constructor() {
@@ -16,37 +27,47 @@ class PluginController {
     getPlugins(ctx) {
         const pluginsDir = fs.readdirSync(pluginsPath);
         const frameworkDir = fs.readdirSync(frameworkPath);
+        const addViewDir = fs.readdirSync(needZipPath.addView);
         ctx.body = {
             pluginsDir,
-            frameworkDir
+            frameworkDir,
+            addViewDir
         }
     }
     async downLoadPlugin(ctx) {
         const { plugin_name = ''} = ctx.query;
+        const { choose = 'plugin' } = ctx.params;
         if (!plugin_name) {
             ctx.throw('插件名称必须填写');
         }
-        const zipName = `./pluginsZip/${plugin_name}.zip`;
-        if (!fs.existsSync(zipName)) {
-            const output = fs.createWriteStream(zipName);
-            const archive = archiver('zip');
-            archive.on('error', function(err){
-                throw err;
-            });
-            
-            archive.pipe(output);
-            archive.directory(`${pluginsPath}/${plugin_name}`, false);
-            archive.finalize();
+        const zipPath = path.resolve(cliPath, './pluginsZip');
+        const hasPluginsZip = await hasPath(zipPath);
+        if (!hasPluginsZip) {
+            await mkdir(zipPath);
         }
-        
-        // const data = fs.readFileSync(zipName);
+
+        const zipName = `${zipPath}/${plugin_name}.zip`;
+
+        if (!fs.existsSync(zipName)) {
+            const compress = () => {
+                return new Promise((resolve, reject) => {
+                    const output = fs.createWriteStream(zipName);
+                    const archive = archiver('zip');
+                    archive.on('error', function(err){
+                        reject(err);
+                    });
+                    archive.on('end', () => {
+                        resolve();
+                    })
+                    
+                    archive.pipe(output);
+                    archive.directory(`${needZipPath[choose]}/${plugin_name}`, false);
+                    archive.finalize();
+                })
+            }
+            await compress();
+        }
         const stream = fs.createReadStream(zipName);
-        // let data = await readFilesStream(zipName);
-        // const wStream = fs.createWriteStream('test111.zip');
-        // stream.pipe(wStream);
-        // const stream = fs.createWriteStream(`antd.zip`);
-        // stream.write(data);
-        // fs.writeFileSync('test11111.zip', data);
         ctx.set({
             'Content-Type': 'application/octet-stream', //告诉浏览器这是一个二进制文件  
         })

@@ -198,6 +198,8 @@ module.exports = React;
 
 客户端同步的脚本命令为`mj-script sync`，这个是默认的`ip：127.0.0.1`与`port：1234`，如果需要更改则需要运行另外的脚本
 
+也可使用`mj-script sync -ip x.x.x.x -prot 1234`来单独获取插件
+
 `mj-script config` 获取本地跟服务器相关的配置
 
 `mj-script config set -ip x.x.x.x -port 1234` 目前是只有这两个配置， 后续新增配置的话，写法雷同，在对应的`key`前面加`-`

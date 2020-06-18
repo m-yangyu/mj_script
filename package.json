@@ -1,6 +1,6 @@
 {
   "name": "mj-script",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "企业级脚手架",
   "main": "index.js",
   "scripts": {

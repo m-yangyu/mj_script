@@ -14,7 +14,8 @@ const {
 const {
     hasPath,
     mkdir
-} = require('../../cli/tools/files')
+} = require('../../cli/tools/files');
+const { getDirPlugins } = require('../utils/utils');
 
 const api = {
     getPlugins: 'getPlugins',
@@ -64,9 +65,9 @@ const getOriginPlugins = function() {
     axios.get(`http://${ip}:${port}/${api.getPlugins}`).then(async (res) => {
         const { data } = res;
         if (data) {
-            const plugins = fs.readdirSync(pluginPath);
-            const framework = fs.readdirSync(frameworkPath);
-            const addView = fs.readdirSync(`${cliPath}/add/template`);
+            const plugins = await getDirPlugins(pluginPath);
+            const framework = await getDirPlugins(frameworkPath);
+            const addView = await getDirPlugins(`${cliPath}/add/template`);
             const {
                 pluginsDir,
                 frameworkDir,

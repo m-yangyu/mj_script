@@ -1,6 +1,6 @@
 {
   "name": "mj-script",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "企业级脚手架",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,11 @@
   "bin": {
     "mj-script": "./index.js"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HuskyToMa/mj_script.git"
+  },
+  "keywords": ["script", "构建", "build", "webpack"],
   "author": "zhanan",
   "license": "ISC",
   "dependencies": {

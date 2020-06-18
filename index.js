@@ -37,6 +37,8 @@ program
     .command('services', '启动服务', services)
         .options('stop', '关闭服务')
         .options('restart', '重启服务')
+        .options('list', '获取服务列表')
+        .options('delete', '删除服务')
     .command('sync', '同步服务器的插件与框架', getOriginPlugins)
         .options('-ip', '重新设置获取服务器的ip地址')
         .options('-port', '端口号')

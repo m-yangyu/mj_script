@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "services-dev": "nodemon ./services/index.js",
-    "services": "pm2 start ./services/index.js",
-    "services-stop": "pm2 stop ./services/index.js",
-    "services-restart": "pm2 restart ./services/index.js"
+    "services": "pm2 start ./services/index.js --name mjScriptServices",
+    "services-stop": "pm2 stop mjScriptServices",
+    "services-restart": "pm2 restart mjScriptServices",
+    "services-del": "pm2 delete mjScriptServices",
+    "services-list": "pm2 list"
   },
   "bin": {
     "mj-script": "./index.js"
@@ -23,7 +25,7 @@
     "@babel/preset-env": "7.8.4",
     "@babel/preset-react": "7.8.3",
     "archiver": "4.0.1",
-    "argv_store": "1.0.6",
+    "argv_store": "^1.0.6",
     "autoprefixer": "9.7.4",
     "axios": "0.19.2",
     "babel-loader": "8.0.6",

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const ora = require('ora');
 const axios = require('axios').default;
+const chalk = require('chalk');
 const request = require('request');
 const decompress = require('decompress');
 const config = require('../../serveConfig/config');
@@ -60,6 +61,7 @@ const getOriginPlugins = function() {
         text: '正在拉取服务端数据',
         discardStdin: false
     }).start();
+    console.log(`http://${ip}:${port}/${api.getPlugins}`);
     axios.get(`http://${ip}:${port}/${api.getPlugins}`).then(async (res) => {
         const { data } = res;
         if (data) {
@@ -84,6 +86,9 @@ const getOriginPlugins = function() {
             
             spinner.succeed('拉取完成');
         }
+    }).catch((err) => {
+        spinner.fail('请求失败');
+        console.log(chalk.red(err));
     })
 }
 

@@ -24,10 +24,20 @@ class PluginController {
     constructor() {
 
     }
-    getPlugins(ctx) {
-        const pluginsDir = fs.readdirSync(pluginsPath);
-        const frameworkDir = fs.readdirSync(frameworkPath);
-        const addViewDir = fs.readdirSync(needZipPath.addView);
+    async getPlugins(ctx) {
+
+        const getPlugins = async (path) => {
+            const hasPluginDir = await hasPath(path);
+            if (!hasPluginDir) {
+                await mkdir(path);
+            }
+            return fs.readdirSync(path);
+        }
+
+        const pluginsDir = await getPlugins(pluginsPath);
+        const frameworkDir = await getPlugins(frameworkPath);
+        const addViewDir = await getPlugins(needZipPath.addView);
+        
         ctx.body = {
             pluginsDir,
             frameworkDir,

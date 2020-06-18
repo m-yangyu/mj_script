@@ -74,7 +74,7 @@ const getOriginPlugins = function() {
             } = data;
             const getPlugin = async (pluginArr, localPluginArr, pluginTemplateName) => {
                 const newPluginArr = pluginArr.filter((name) => !localPluginArr.includes(name));
-                localPluginArr.forEach(async (name) => {
+                newPluginArr.forEach(async (name) => {
                     spinner.text = `download ${name} ${pluginTemplateName}`;
                     await downloadZip(name, pluginTemplateName, ip, port);
                 })

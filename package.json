@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "services-dev": "nodemon ./services/index.js",
-    "services": "pm2 start ./services/index.js",
-    "services-stop": "pm2 stop ./services/index.js",
-    "services-restart": "pm2 restart ./services/index.js"
+    "services": "pm2 start ./services/index.js --name mjScriptServices",
+    "services-stop": "pm2 stop mjScriptServices",
+    "services-restart": "pm2 restart mjScriptServices",
+    "services-del": "pm2 delete mjScriptServices",
+    "services-list": "pm2 list"
   },
   "bin": {
     "mj-script": "./index.js"
@@ -23,7 +25,7 @@
     "@babel/preset-env": "7.8.4",
     "@babel/preset-react": "7.8.3",
     "archiver": "4.0.1",
-    "argv_store": "1.0.6",
+    "argv_store": "^1.0.6",
     "autoprefixer": "9.7.4",
     "axios": "0.19.2",
     "babel-loader": "8.0.6",
@@ -34,7 +36,7 @@
     "copy-webpack-plugin": "5.1.1",
     "css-loader": "3.4.2",
     "cssnano": "4.1.10",
-    "decompress": "^4.2.1",
+    "decompress": "4.2.1",
     "file-loader": "5.1.0",
     "fs-extra": "9.0.0",
     "happypack": "5.0.1",
@@ -45,7 +47,7 @@
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "ora": "4.0.3",
-    "pm2": "^4.4.0",
+    "pm2": "4.4.0",
     "postcss-loader": "3.0.0",
     "react-hot-loader": "4.12.19",
     "react-test-renderer": "16.13.0",

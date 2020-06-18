@@ -52,7 +52,11 @@ const getResult = async () => {
 
     let cacheName = {}
     const options = [
-        ...require(path.resolve(__dirname, `../plugins/framework/${moduleOptions.options}`)),
+        ...(
+            moduleOptions.options !== 'other' ? 
+            require(path.resolve(__dirname, `../plugins/framework/${moduleOptions.options}`)) :
+            []
+        ),
         ...otherOptions.options
     ]
     if (isCache.cache) {

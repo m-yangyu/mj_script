@@ -6,13 +6,13 @@ const {
     frameworkPath
 } = require('../../config');
 const {
-    readFilesStream,
     mkdir,
     hasPath,
 } = require('../../../cli/tools/files');
 const {
     cliPath
-} = require('../../../config/static')
+} = require('../../../config/static');
+const { getDirPlugins } = require('../../utils/utils');
 
 const needZipPath = {
     plugin: pluginsPath,
@@ -26,17 +26,9 @@ class PluginController {
     }
     async getPlugins(ctx) {
 
-        const getPlugins = async (path) => {
-            const hasPluginDir = await hasPath(path);
-            if (!hasPluginDir) {
-                await mkdir(path);
-            }
-            return fs.readdirSync(path);
-        }
-
-        const pluginsDir = await getPlugins(pluginsPath);
-        const frameworkDir = await getPlugins(frameworkPath);
-        const addViewDir = await getPlugins(needZipPath.addView);
+        const pluginsDir = await getDirPlugins(pluginsPath);
+        const frameworkDir = await getDirPlugins(frameworkPath);
+        const addViewDir = await getDirPlugins(needZipPath.addView);
         
         ctx.body = {
             pluginsDir,

@@ -61,7 +61,6 @@ const getOriginPlugins = function() {
         text: '正在拉取服务端数据',
         discardStdin: false
     }).start();
-    console.log(`http://${ip}:${port}/${api.getPlugins}`);
     axios.get(`http://${ip}:${port}/${api.getPlugins}`).then(async (res) => {
         const { data } = res;
         if (data) {

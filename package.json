@@ -18,7 +18,12 @@
     "type": "git",
     "url": "https://github.com/HuskyToMa/mj_script.git"
   },
-  "keywords": ["script", "构建", "build", "webpack"],
+  "keywords": [
+    "script",
+    "构建",
+    "build",
+    "webpack"
+  ],
   "author": "zhanan",
   "license": "ISC",
   "dependencies": {
@@ -31,6 +36,7 @@
     "inquirer": "7.1.0",
     "koa": "2.12.1",
     "koa-router": "9.0.1",
+    "mj-config": "^1.0.0",
     "ora": "4.0.3",
     "pm2": "4.4.0",
     "request": "2.88.2",

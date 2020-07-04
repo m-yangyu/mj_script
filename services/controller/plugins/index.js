@@ -11,7 +11,7 @@ const {
 } = require('../../../cli/tools/files');
 const {
     cliPath
-} = require('../../../config/static');
+} = require('mj-config/static');
 const { getDirPlugins } = require('../../utils/utils');
 
 const needZipPath = {

@@ -1,6 +1,6 @@
 const { mkdir } = require('../tools/files');
 const { getPromiseFunc } = require('../tools/utils');
-const { DIR } = require('../../config/static');
+const { DIR } = require('mj-config/static');
 const Generator = require('./Generator');
 const ora = require('ora');
 

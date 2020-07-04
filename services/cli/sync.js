@@ -10,7 +10,7 @@ const {
     cliPath,
     pluginPath,
     frameworkPath,
-} = require('../../config/static');
+} = require('mj-config/static');
 const {
     hasPath,
     mkdir

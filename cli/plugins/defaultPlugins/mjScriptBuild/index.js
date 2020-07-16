@@ -5,7 +5,7 @@ const { copyFile } = require('../../../tools/files');
 class React {
     constructor() {
         this.packageVersion = {
-            "mj-script-build": "1.0.0",
+            "mj-script-build": "1.0.1",
         }
         this.scripts = {
             "build": "mj-script-build build",

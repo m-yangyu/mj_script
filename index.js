@@ -1,11 +1,7 @@
 #!/usr/bin/env node
 const argvStore = require('argv_store');
-const devServer = require('./devServer');
-const build = require('./build');
-const addView = require('./add');
-const deploy = require('./deploy');
-const dll = require('./dll');
 const services = require('./services/cli');
+const addView = require('./add');
 const {
     reactInit,
     addPlugins,
@@ -18,15 +14,6 @@ const program = new argvStore();
 
 program
     .version(packageJson.version)
-    .command('build', '构建', build)
-    .command('build:pre', '预生产', () => build({isPre: true}))
-    .command('dev', '开发', devServer)
-    .command('analyz', '分析', () => build({isAnalyz: true}))
-    .command('add', '添加新页面', addView)
-        .options('-t --template', '添加新的页面模板')
-        .options('-s --select', '直接选择需要添加的页面模板')
-    .command('deploy', '部署', deploy)
-    .command('build:lib', 'dll文件构建', dll)
     .command('create', '初始化', reactInit)
         .options('-r --rename', '[yourname] 重命名')
     .command('addPlugins', '添加插件', addPlugins)
@@ -34,6 +21,9 @@ program
         .options('-u --url', '从远处仓库拉取')
         .options('-n --npm', '从npm拉取')
         .options('-c --current', '从当前目录复制')
+    .command('add', '添加新页面', addView)
+        .options('-t --template', '添加新的页面模板')
+        .options('-s --select', '直接选择需要添加的页面模板')
     .command('services', '启动服务', services)
         .options('stop', '关闭服务')
         .options('restart', '重启服务')

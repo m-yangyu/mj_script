@@ -11,7 +11,7 @@ class React {
             "@hot-loader/react-dom": "16.12.0",
             "react-hot-loader": "4.12.19"
         }
-        this.packageProVersion = {
+        this.proPackageVersion = {
             "react": "16.13.0",
             "react-dom": "16.13.0",
         }
@@ -27,9 +27,9 @@ class React {
             const pro = packageJson.dependencies;
             Object.keys(this.packageVersion).map(name => {
                 dev[name] = this.packageVersion[name];
-            })
-            Object.keys(this.packageProVersion).forEach(name => {
-                pro[name] = this.packageProVersion[name];
+            });
+            Object.keys(this.proPackageVersion).forEach(name => {
+                pro[name] = this.proPackageVersion[name];
             })
         })
         gen.hooks.afterPackageJson.tapAsync('react', (callback) => {

@@ -4,7 +4,7 @@ const fsE = require('fs-extra');
 const ora = require('ora');
 const rimraf = require('rimraf');
 const configureFiles = require('./configureFiles');
-const { DIR } = require('../../config/static');
+const { DIR } = require('mj-config/static');
 const modulesLoad = require('../plugins');
 
 const { getDelConfig } = configureFiles;

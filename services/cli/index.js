@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-const { cliPath } = require('../../config/static');
+const { cliPath } = require('mj-config/static');
 
 const myExec = (command) => {
     exec(command, {

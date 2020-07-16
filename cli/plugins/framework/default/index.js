@@ -6,5 +6,5 @@ module.exports = [
     'reactRouter',
     'redux',
     'react',
-    'mjScript'
+    'mjScriptBuild'
 ]

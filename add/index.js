@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { DIR } = require('../config/static/index');
+const { DIR } = require('mj-config/static/index');
 const {
     copyFile,
     hasPath,

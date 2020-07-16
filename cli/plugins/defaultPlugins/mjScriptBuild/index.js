@@ -5,16 +5,16 @@ const { copyFile } = require('../../../tools/files');
 class React {
     constructor() {
         this.packageVersion = {
-            "mj-script": "1.3.5",
+            "mj-script-build": "1.0.1",
         }
         this.scripts = {
-            "build": "mj-script build",
-            "dev": "mj-script dev",
-            "build:pre": "mj-script build:pre",
-            "analyz": "mj-script analyz",
-            "add": "mj-script add",
-            "deploy": "mj-script deploy",
-            "build:lib": "mj-script build:lib",
+            "build": "mj-script-build build",
+            "dev": "mj-script-build dev",
+            "build:pre": "mj-script-build build:pre",
+            "analyz": "mj-script-build analyz",
+            "add": "mj-script-build add",
+            "deploy": "mj-script-build deploy",
+            "build:lib": "mj-script-build build:lib",
         }
         this.configPath = path.resolve(__dirname, './config')
         this.defaultConfigName = {
@@ -23,7 +23,7 @@ class React {
     }
     apply(gen) {
         gen.createConfig = true;
-        gen.hooks.beforePackageJson.tap('mjScript', () => {
+        gen.hooks.beforePackageJson.tap('mjScriptBuild', () => {
             const packageJson = gen.defaultPackageJson;
             const dev = packageJson.devDependencies;
             const script = packageJson.scripts;
@@ -34,7 +34,7 @@ class React {
                 script[name] = this.scripts[name];
             })
         })
-        gen.hooks.afterRootConfig.tap('mjScript', async () => {
+        gen.hooks.afterRootConfig.tap('mjScriptBuild', async () => {
             const rootConfigPath = `${gen.rootPath}/config`;
             if (fs.existsSync(rootConfigPath)) {
                 const serverConfigPath = path.resolve(__dirname, './config');

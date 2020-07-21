@@ -1,8 +1,14 @@
-const { mkdir } = require('../tools/files');
-const { getPromiseFunc } = require('../tools/utils');
-const { DIR } = require('mj-config/static');
-const Generator = require('./Generator');
-const ora = require('ora');
+// const { mkdir } = require('../tools/files');
+// const { getPromiseFunc } = require('../tools/utils');
+// const { DIR } = require('mj-config/static');
+// const Generator = require('./Generator');
+// const ora = require('ora');
+
+import { mkdir } from '../tools/files';
+import { getPromiseFunc } from '../tools/utils';
+import { DIR } from 'mj-config/static';
+import Generator from './Generator/index';
+import ora from 'ora';
 
 const modulesNameArr = [
     'PackageJson',
@@ -49,7 +55,7 @@ const doneFunc = async (gen, name) => {
     })
 }
 
-const modulesLoad = async (options, renameParam) => {
+export default modulesLoad = async (options, renameParam) => {
 
     const gen = createGenerator();
     const rootPath = `${DIR}/${renameParam || 'template'}`;
@@ -67,4 +73,4 @@ const modulesLoad = async (options, renameParam) => {
     spinner.succeed('下载完成');
 }
 
-module.exports = modulesLoad;
+// module.exports = modulesLoad;

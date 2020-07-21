@@ -9,7 +9,8 @@
     "services-stop": "pm2 stop mjScriptServices",
     "services-restart": "pm2 restart mjScriptServices",
     "services-del": "pm2 delete mjScriptServices",
-    "services-list": "pm2 list"
+    "services-list": "pm2 list",
+    "build": "rollup -c"
   },
   "bin": {
     "mj-script": "./index.js"
@@ -47,6 +48,13 @@
     "node": ">=12.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-external-helpers": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "nodemon": "^2.0.4",
+    "rollup": "^2.22.1",
+    "rollup-plugin-babel": "^4.4.0"
   }
 }

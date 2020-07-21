@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const { readCacheOptions, setCacheOptions } = require(`${path.resolve(__dirname, '../localCache')}`);
 const { modulesConfig, filterModules } = require('./configureFiles')
 
-const getInquirerResult = async () => {
+export const getInquirerResult = async () => {
     let data = {};
     const cacheOptions = readCacheOptions();
     if (cacheOptions) {
@@ -28,7 +28,7 @@ const getInquirerResult = async () => {
     return data;
 }
 
-const getResult = async () => {
+export const getResult = async () => {
     const moduleOptions = await inquirer.prompt({
         type: 'list',
         name: 'options',
@@ -81,6 +81,6 @@ const getResult = async () => {
     }
 }
 
-module.exports = {
-    getInquirerResult
-}
+// module.exports = {
+//     getInquirerResult
+// }

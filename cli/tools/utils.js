@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const readFileSync = (url) => {
+export const readFileSync = (url) => {
     return JSON.parse(fs.readFileSync(path.resolve(__dirname, url)).toString());
 }
 
-const getPromiseFunc = func => (...res) => new Promise((resolve, reject) => {
+export const getPromiseFunc = func => (...res) => new Promise((resolve, reject) => {
     try {
         func.apply(null, [resolve, reject, ...res])
     } catch(e) {
@@ -13,7 +13,7 @@ const getPromiseFunc = func => (...res) => new Promise((resolve, reject) => {
     }
 });
 
-module.exports = {
-    readFileSync,
-    getPromiseFunc
-}
+// module.exports = {
+//     readFileSync,
+//     getPromiseFunc
+// }

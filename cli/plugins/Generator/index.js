@@ -1,19 +1,17 @@
-const fs = require('fs');
-const path = require('path');
-const { copyFile, writeFile, mkdir } = require('../../tools/files');
-const {
+// const fs = require('fs');
+// const path = require('path');
+// const { copyFile, writeFile, mkdir } = require('../../tools/files');
+// const {
+//     SyncHook,
+//     AsyncSeriesWaterfallHook
+// } = require('tapable');
+import { writeFile, mkdir } from '../../tools/files';
+import {
     SyncHook,
-    SyncBailHook,
-    SyncWaterfallHook,
-    SyncLoopHook,
-    AsyncParallelHook,
-    AsyncParallelBailHook,
-    AsyncSeriesHook,
-    AsyncSeriesBailHook,
     AsyncSeriesWaterfallHook
-} = require('tapable');
+} from 'tapable';
 
-class Generator {
+export default class Generator {
     constructor() {
         this.hooks = {
             startGenerator: new SyncHook('startGenerator'),
@@ -56,4 +54,4 @@ class Generator {
     }
 }
 
-module.exports =  Generator;
+// module.exports =  Generator;

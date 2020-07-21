@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const fsE = require('fs-extra');
 
-const copyFile = (currentPath, toPath) => {
+export const copyFile = (currentPath, toPath) => {
     return new Promise((resolve, reject) => {
         fsE.copy(currentPath, toPath, err => {
             if (err) reject(err);
@@ -11,7 +11,7 @@ const copyFile = (currentPath, toPath) => {
     })
 }
 
-const writeFile = (url, data) => {
+export const writeFile = (url, data) => {
     return new Promise((resolve, reject) => {
         fs.writeFile(url, data, err => {
             if (err) reject(err)
@@ -20,7 +20,7 @@ const writeFile = (url, data) => {
     })
 }
 
-const mkdir = (path) => {
+export const mkdir = (path) => {
     return new Promise((resolve, reject) => {
         fs.mkdir(path, { recursive: true }, err => {
             if (err) reject(err);
@@ -29,11 +29,11 @@ const mkdir = (path) => {
     })
 }
 
-const emptyDir = (path) => {
+export const emptyDir = (path) => {
     return fsE.emptyDir(path);
 }
 
-const getDirNameByPath = (path) => {
+export const getDirNameByPath = (path) => {
     let currentDirNameArr = path.split('/');
     if (~path.indexOf('\\')) {
         currentDirNameArr = path.split('\\');
@@ -41,11 +41,11 @@ const getDirNameByPath = (path) => {
     return currentDirNameArr[currentDirNameArr.length - 1];
 }
 
-const hasPath = (path) => {
+export const hasPath = (path) => {
     return fsE.pathExists(path);
 }
 
-const readFilesStream = (path) => {
+export const readFilesStream = (path) => {
     return new Promise((resolve, reject) => {
         const stream = fs.createReadStream(path);
         let data = '';
@@ -59,12 +59,12 @@ const readFilesStream = (path) => {
     })
 }
 
-module.exports = {
-    copyFile,
-    writeFile,
-    mkdir,
-    emptyDir,
-    getDirNameByPath,
-    hasPath,
-    readFilesStream
-}
+// module.exports = {
+//     copyFile,
+//     writeFile,
+//     mkdir,
+//     emptyDir,
+//     getDirNameByPath,
+//     hasPath,
+//     readFilesStream
+// }

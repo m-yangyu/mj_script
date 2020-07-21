@@ -5,7 +5,7 @@ const path = require('path');
 const plugins = fs.readdirSync(path.resolve(__dirname, '../plugins/defaultPlugins'));
 const FrameWork = fs.readdirSync(path.resolve(__dirname, '../plugins/framework'));
 
-const modulesConfig = {
+export const modulesConfig = {
     module: plugins,
     framework: [
         ...FrameWork,
@@ -13,7 +13,7 @@ const modulesConfig = {
     ]
 }
 
-const filterModules = (frameworkName) => {
+export const filterModules = (frameworkName) => {
     const frameworkDir = path.resolve(__dirname, `../plugins/framework/${frameworkName}`);
     if (!fs.existsSync(frameworkDir)) {
         return plugins;
@@ -56,7 +56,7 @@ const run = () => {
     })   
 }
 
-const configureFiles = (dirPath, config) => {
+export default configureFiles = (dirPath, config) => {
     configure.path = dirPath;
     // 设置模块的使用情况
     config.map(name => {
@@ -65,14 +65,14 @@ const configureFiles = (dirPath, config) => {
     run();
 }
 
-const getDelConfig = (need) => {
+export const getDelConfig = (need) => {
     const all = [
         ...modulesConfig.module
     ]
     return all.filter(item => !need.includes(item));
 }
 
-module.exports = configureFiles;
-module.exports.modulesConfig = modulesConfig;
-module.exports.getDelConfig = getDelConfig;
-module.exports.filterModules = filterModules;
+// module.exports = configureFiles;
+// module.exports.modulesConfig = modulesConfig;
+// module.exports.getDelConfig = getDelConfig;
+// module.exports.filterModules = filterModules;

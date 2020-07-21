@@ -1,12 +1,19 @@
-const path = require('path');
-const ora = require('ora');
-const {
+// const path = require('path');
+// const ora = require('ora');
+// const {
+//     downLoadGit,
+//     getProgramName
+// } = require('../tools/downLoad');
+// const {
+//     copyFile
+// } = require('../tools/files')
+import path from 'path';
+import ora from 'ora';
+import {
     downLoadGit,
     getProgramName
-} = require('../tools/downLoad');
-const {
-    copyFile
-} = require('../tools/files')
+} from '../tools/downLoad';
+import { copyFile } from '../tools/files';
 
 const downLoadByUrl = (argvs, saveDirName) => {
     const url = argvs['-u'] || argvs['--url'];
@@ -46,7 +53,7 @@ const downLoadByCurrent = (argvs, saveDirName) => {
     );
 }
 
-module.exports = function() {
+export default function() {
     const argvs = this.argvs.keyMap;
     const methods = argvs['-m'] || argvs['--methods'];
 

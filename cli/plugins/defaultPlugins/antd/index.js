@@ -6,6 +6,7 @@ class Antd {
     constructor() {
         this.packageVersion = {
             "antd": "4.0.0",
+            "less-loader": "5.0.0",
         }
     }
     apply(gen) {
